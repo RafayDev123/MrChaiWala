@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { FileBarChart, Eye, FileSpreadsheet, FileText, CheckCircle2 } from "lucide-react";
+import { FileBarChart, Eye, FileText, CheckCircle2 } from "lucide-react";
 import { isWithinInterval, parseISO, startOfMonth, startOfWeek, subDays } from "date-fns";
 import { useApp } from "../context/AppContext";
 import { useToast } from "../components/ui/Toast";
@@ -10,7 +10,6 @@ import { EmptyState } from "../components/ui/EmptyState";
 import { formatCurrency } from "../lib/money";
 import { formatDateKeyLong, todayKey } from "../lib/date";
 import { computeDayTotals } from "../lib/aggregate";
-import { downloadDailyExcel } from "../lib/export/excel";
 import { downloadDailyPdf } from "../lib/export/pdf";
 import { cn } from "../utils/cn";
 
@@ -72,15 +71,6 @@ export function Reports() {
   }, [filter, reportRows, today, customFrom, customTo]);
 
   const viewingTotals = viewingReport?.totals ?? null;
-
-  const handleExcel = (totals: ReportRow["totals"]) => {
-    try {
-      const fileName = downloadDailyExcel(totals, data.settings.cafeName);
-      toast?.show(`Excel report saved: ${fileName}`, "success");
-    } catch {
-      toast?.show("Could not generate the Excel report. Please try again.", "error");
-    }
-  };
 
   const handlePdf = (totals: ReportRow["totals"]) => {
     try {
@@ -169,9 +159,6 @@ export function Reports() {
                       <Button variant="secondary" size="sm" onClick={() => setViewingReport({ key, dateKey, totals })}>
                     <Eye className="h-4 w-4" /> View
                   </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleExcel(totals)}>
-                    <FileSpreadsheet className="h-4 w-4" /> Excel
-                  </Button>
                   <Button variant="outline" size="sm" onClick={() => handlePdf(totals)}>
                     <FileText className="h-4 w-4" /> PDF
                   </Button>
@@ -226,9 +213,6 @@ export function Reports() {
               </ul>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" fullWidth onClick={() => handleExcel(viewingTotals!)}>
-                <FileSpreadsheet className="h-4 w-4" /> Excel
-              </Button>
               <Button variant="outline" fullWidth onClick={() => handlePdf(viewingTotals!)}>
                 <FileText className="h-4 w-4" /> PDF
               </Button>

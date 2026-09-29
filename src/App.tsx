@@ -23,7 +23,7 @@ const PAGE_META: Record<Page, { title: string; subtitle: string }> = {
   expenses: { title: "Expenses", subtitle: "Record today's spending" },
   hisaab: { title: "Today's Hisaab", subtitle: "Complete daily summary" },
   udhaar: { title: "Udhaar", subtitle: "Customer credit records" },
-  reports: { title: "Reports", subtitle: "Daily Excel & PDF reports" },
+  reports: { title: "Reports", subtitle: "Daily PDF reports" },
   items: { title: "Items", subtitle: "Manage products & prices" },
   settings: { title: "Settings", subtitle: "Cafe details, backup & more" },
 };

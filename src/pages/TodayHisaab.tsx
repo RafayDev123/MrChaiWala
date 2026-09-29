@@ -8,7 +8,6 @@ import { Modal } from "../components/ui/Modal";
 import { formatCurrency } from "../lib/money";
 import { todayKey, formatDateKeyLong } from "../lib/date";
 import { computeDayTotals } from "../lib/aggregate";
-import { downloadDailyExcel } from "../lib/export/excel";
 import { downloadDailyPdf } from "../lib/export/pdf";
 
 export function TodayHisaab() {
@@ -20,7 +19,6 @@ export function TodayHisaab() {
 
   const handleCloseDay = () => {
     try {
-      downloadDailyExcel(totals, data.settings.cafeName);
       downloadDailyPdf(totals, data.settings.cafeName, data.settings.subtitle);
       closeDay(dateKey);
       toast?.show("Day closed and report generated successfully ✓", "success");

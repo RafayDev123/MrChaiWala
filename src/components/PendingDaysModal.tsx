@@ -6,7 +6,6 @@ import { Modal } from "./ui/Modal";
 import { Button } from "./ui/Button";
 import { getUnclosedPastDays, computeDayTotals } from "../lib/aggregate";
 import { todayKey, formatDateKeyLong } from "../lib/date";
-import { downloadDailyExcel } from "../lib/export/excel";
 import { downloadDailyPdf } from "../lib/export/pdf";
 
 export function PendingDaysModal() {
@@ -24,7 +23,6 @@ export function PendingDaysModal() {
     try {
       for (const dateKey of pendingDays) {
         const totals = computeDayTotals(data, dateKey);
-        downloadDailyExcel(totals, data.settings.cafeName);
         downloadDailyPdf(totals, data.settings.cafeName, data.settings.subtitle);
         closeDay(dateKey);
       }
@@ -57,7 +55,7 @@ export function PendingDaysModal() {
         </div>
       </div>
       <p className="mt-4 text-xs text-stone-500">
-        Nothing will be deleted. This will simply generate the Excel & PDF reports for these days
+        Nothing will be deleted. This will generate PDF reports for these days
         and mark them as closed, so your records stay complete.
       </p>
       <div className="mt-5 flex gap-3">
